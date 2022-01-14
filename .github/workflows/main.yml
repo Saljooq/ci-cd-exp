@@ -34,4 +34,10 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-          mkdir testFromGitHub
+          
+      # Get the current user, location and ls of root
+      - name: Run a relevant bash commangs
+        run: |
+          whoami
+          pwd
+          ls -l /
