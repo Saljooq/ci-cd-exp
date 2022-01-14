@@ -37,7 +37,10 @@ jobs:
           
       # Get the current user, location and ls of root
       - name: Run a relevant bash commangs
-        run: |
-          whoami
-          pwd
-          ls -l /
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: whoami
