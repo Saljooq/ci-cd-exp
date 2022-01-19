@@ -67,4 +67,5 @@ jobs:
             cd /cicdexp
             touch test
             echo "Got here successfully!!" >> test
-            docker pull saljooq/linode-docker:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
+            docker run -dp 8081:80 ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
