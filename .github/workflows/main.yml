@@ -35,6 +35,26 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
           
+      - name: Checkout 
+        run:  actions/checkout@v2
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
+          
       # Get the current user, location and ls of root
       - name: Run a relevant bash commangs
         uses: appleboy/ssh-action@master
@@ -44,6 +64,9 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: "22"
           script: |
-            mkdir testFromGitHub
-            whoami
-            ls -l /
+            touch cicdhistory
+            echo "last cicd update made at:     $(date)" >> cicdhistory
+            cd /cicdexp
+            touch test
+            echo "Got here successfully!!" >> test
+            docker pull saljooq/linode-docker:latest
