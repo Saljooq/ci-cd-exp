@@ -66,4 +66,5 @@ jobs:
             echo "last cicd update made at:     $(date)" >> cicdhistory
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
             docker stop cicdtest
+            docker rm cicdtest
             docker run -dp 8081:80 --name cicdtest ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
