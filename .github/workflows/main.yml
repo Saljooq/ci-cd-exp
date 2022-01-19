@@ -48,10 +48,12 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:buildcache,mode=max
           
       # Get the current user, location and ls of root
       - name: Update the system history, pull new docker image and run it on port 8081
