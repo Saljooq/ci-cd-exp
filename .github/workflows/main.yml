@@ -54,7 +54,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
           
       # Get the current user, location and ls of root
-      - name: Run a relevant bash commangs
+      - name: Update the system history, pull new docker image and run it on port 8081
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -68,4 +68,5 @@ jobs:
             touch test
             echo "Got here successfully!!" >> test
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
-            docker run -dp 8081:80 ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
+            docker stop cicdtest
+            docker run -dp 8081:80 --name cicdtest ${{ secrets.DOCKERHUB_USERNAME }}/linode-docker:latest
